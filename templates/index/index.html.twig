@@ -2,15 +2,27 @@
 
 
 {% block body%}
- {% for article in articles %}
-            <tr>
-                <td>{{ article.id }}</td>
-                <td>{{ article.Title }}</td>
-                <td>{{ article.Description }}</td>
-                <td>{{ article.Content }}</td>
-                <td>{{ article.Releasedate ? article.Releasedate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ article.Author }}</td>
-                <td>{{ article.Statut }}</td>
-            </tr>
+<div class="row">
+ {% for article in articles|sort((b, a) => a.Releasedate <=> b.Releasedate) %}
+ {% if article.id < 4 %}
+ {% if article.Statut == "Publié" %}
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+             <h5 class="card-title">{{ article.Title }}</h5>
+            <p class="card-text">{{ article.Content }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{ article.Description }}</li>
+                <li class="list-group-item">{{ article.Releasedate ? article.Releasedate|date('Y-m-d H:i:s') : '' }}</li>
+                <li class="list-group-item">{{ article.Author }}</li>
+                <li class="list-group-item">{{ article.Statut }}</li>
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+    {% endif %}
+
         {% endfor %}
+        </div>
 {% endblock %}
