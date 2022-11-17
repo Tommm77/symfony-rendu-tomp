@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+
+{% block body%}
+ {% for article in articles %}
+            <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article.Title }}</td>
+                <td>{{ article.Description }}</td>
+                <td>{{ article.Content }}</td>
+                <td>{{ article.Releasedate ? article.Releasedate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ article.Author }}</td>
+                <td>{{ article.Statut }}</td>
+            </tr>
+        {% endfor %}
+{% endblock %}
