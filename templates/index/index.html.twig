@@ -16,7 +16,11 @@
                 <li class="list-group-item">{{ article.Description }}</li>
                 <li class="list-group-item">{{ article.Releasedate ? article.Releasedate|date('Y-m-d H:i:s') : '' }}</li>
                 <li class="list-group-item">{{ article.Statut }}</li>
+                {% if app.user.id == article.User.id %}
+            <li class="list-group-item"><a class="btn btn-lg btn-primary" href="{{ path('app_private_profil', {'id': article.User.id})}}">{{ article.Author }}</a></li>
+            {% else %}
             <li class="list-group-item"><a class="btn btn-lg btn-primary" href="{{ path('app_public_profil', {'id': article.User.id})}}">{{ article.Author }}</a></li>
+            {% endif %}
                 <li class="list-group-item">    <a class="btn btn-lg btn-primary" href="{{ path('app_article_showpublic', {'id': article.id}) }}">
         Show
     </a></li>

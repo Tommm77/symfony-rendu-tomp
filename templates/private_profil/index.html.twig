@@ -9,12 +9,29 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/user/Dropbox/PC/Desktop/BACHELOR/W2/symfony-rendu-tomt-master/src/Controller/PrivateProfilController.php'|file_link(0) }}">src/Controller/PrivateProfilController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/user/Dropbox/PC/Desktop/BACHELOR/W2/symfony-rendu-tomt-master/templates/private_profil/index.html.twig'|file_link(0) }}">templates/private_profil/index.html.twig</a></code></li>
-    </ul>
+     <h1>{{app.user.FirstName}} Public Profil </h1>
+    <div class="row">
+ {% for article in articles|sort((b, a) => a.Releasedate <=> b.Releasedate) %}
+    {% if article.User.id == app.user.id %}
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+             <h5 class="card-title">{{ article.Title }}</h5>
+            <p class="card-text">{{ article.Content }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{ article.Description }}</li>
+                <li class="list-group-item">{{ article.Releasedate ? article.Releasedate|date('Y-m-d H:i:s') : '' }}</li>
+                <li class="list-group-item">{{ article.Author }}</li>
+                <li class="list-group-item">{{ article.Statut }}</li>
+                                <li class="list-group-item">    <a class="btn btn-lg btn-primary" href="{{ path('app_article_showprofil', {'id': article.id}) }}">
+        Show
+    </a></li>
+                                <li class="list-group-item">{{ include('article/_delete_form_profil.html.twig') }}</li>
+            </ul>
+        </div>
+    </div>
+        {% endif %}
+        {% endfor %}
 </div>
 {% endblock %}

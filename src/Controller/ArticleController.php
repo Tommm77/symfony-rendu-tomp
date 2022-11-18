@@ -56,6 +56,14 @@ class ArticleController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/showprofil', name: 'app_article_showprofil', methods: ['GET'])]
+    public function showprofil(Article $article): Response
+    {
+        return $this->render('article/showprofil.html.twig', [
+            'article' => $article,
+        ]);
+    }
+
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, ArticleRepository $articleRepository): Response
     {
@@ -82,5 +90,15 @@ class ArticleController extends AbstractController
         }
 
         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/deleteprofil', name: 'app_article_deleteprofil', methods: ['POST'])]
+    public function deleteatprofil(Request $request, Article $article, ArticleRepository $articleRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
+            $articleRepository->remove($article, true);
+        }
+
+        return $this->redirectToRoute('app_private_profil', [], Response::HTTP_SEE_OTHER);
     }
 }
