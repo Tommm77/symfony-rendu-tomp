@@ -21,7 +21,7 @@ class ArticleController extends AbstractController
             'articles' => $articleRepository->findAll(),
         ]);
     }
-    
+
 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ArticleRepository $articleRepository): Response
@@ -47,12 +47,12 @@ class ArticleController extends AbstractController
     {
         $currentUser = $this->getUser();
         if ($currentUser->getRoles() == ["ROLE_ADMIN", "ROLE_USER"]) {
-        return $this->render('article/show.html.twig', [
-            'article' => $article,
-        ]);
-    }else {
-        return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
-    }
+            return $this->render('article/show.html.twig', [
+                'article' => $article,
+            ]);
+        } else {
+            return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
+        }
     }
 
     #[Route('/{id}/show', name: 'app_article_showpublic', methods: ['GET'])]
@@ -60,23 +60,23 @@ class ArticleController extends AbstractController
     {
         $currentUser = $this->getUser();
         if ($currentUser->getRoles() == ["ROLE_ADMIN", "ROLE_USER"] || $currentUser->getRoles() == ["ROLE_USER"]) {
-        return $this->render('article/showpublic.html.twig', [
-            'article' => $article,
-        ]);
-    }else {
-        return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
-    }
+            return $this->render('article/showpublic.html.twig', [
+                'article' => $article,
+            ]);
+        } else {
+            return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
+        }
     }
 
     #[Route('/{id}/showprofil', name: 'app_article_showprofil', methods: ['GET'])]
     public function showprofil(Article $article): Response
     {
         $currentUser = $this->getUser();
-if ($currentUser->getId() == $article->getUser()->getId()) {
-    return $this->render('article/showprofil.html.twig', [
-        'article' => $article,
-    ]);
-} else {
+        if ($currentUser->getId() == $article->getUser()->getId()) {
+            return $this->render('article/showprofil.html.twig', [
+                'article' => $article,
+            ]);
+        } else {
             return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
         }
     }
@@ -86,22 +86,22 @@ if ($currentUser->getId() == $article->getUser()->getId()) {
     {
         $currentUser = $this->getUser();
         if ($currentUser->getRoles() == ["ROLE_ADMIN", "ROLE_USER"]) {
-        $form = $this->createForm(Article1Type::class, $article);
-        $form->handleRequest($request);
+            $form = $this->createForm(Article1Type::class, $article);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $articleRepository->save($article, true);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $articleRepository->save($article, true);
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->renderForm('article/edit.html.twig', [
+                'article' => $article,
+                'form' => $form,
+            ]);
+        } else {
+            return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->renderForm('article/edit.html.twig', [
-            'article' => $article,
-            'form' => $form,
-        ]);
-    }else {
-        return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
-    }
     }
 
     #[Route('/{id}/editonprofil', name: 'app_article_edit_profil', methods: ['GET', 'POST'])]
@@ -109,22 +109,22 @@ if ($currentUser->getId() == $article->getUser()->getId()) {
     {
         $currentUser = $this->getUser();
         if ($currentUser->getId() == $article->getUser()->getId()) {
-        $form = $this->createForm(Article1Type::class, $article);
-        $form->handleRequest($request);
+            $form = $this->createForm(Article1Type::class, $article);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $articleRepository->save($article, true);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $articleRepository->save($article, true);
 
-            return $this->redirectToRoute('app_private_profil', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_private_profil', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->renderForm('article/editonprofil.html.twig', [
+                'article' => $article,
+                'form' => $form,
+            ]);
+        } else {
+            return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->renderForm('article/editonprofil.html.twig', [
-            'article' => $article,
-            'form' => $form,
-        ]);
-    }else {
-        return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
-    }
     }
 
 
@@ -133,14 +133,14 @@ if ($currentUser->getId() == $article->getUser()->getId()) {
     {
         $currentUser = $this->getUser();
         if ($currentUser->getRoles() == ["ROLE_ADMIN", "ROLE_USER"]) {
-        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
-            $articleRepository->remove($article, true);
-        }
+            if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
+                $articleRepository->remove($article, true);
+            }
 
-        return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
-    }else {
-        return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
-    }
+            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+        } else {
+            return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
+        }
     }
 
     #[Route('/{id}/deleteprofil', name: 'app_article_deleteprofil', methods: ['POST'])]
@@ -148,14 +148,13 @@ if ($currentUser->getId() == $article->getUser()->getId()) {
     {
         $currentUser = $this->getUser();
         if ($currentUser->getId() == $article->getUser()->getId()) {
-        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
-            $articleRepository->remove($article, true);
-        }
+            if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
+                $articleRepository->remove($article, true);
+            }
 
-        return $this->redirectToRoute('app_private_profil', [], Response::HTTP_SEE_OTHER);
-    }
-    else {
-        return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
-    }
+            return $this->redirectToRoute('app_private_profil', [], Response::HTTP_SEE_OTHER);
+        } else {
+            return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
+        }
     }
 }

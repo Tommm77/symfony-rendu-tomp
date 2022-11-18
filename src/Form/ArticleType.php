@@ -17,8 +17,7 @@ class ArticleType extends AbstractType
             ->add('Content')
             ->add('Releasedate')
             ->add('Author')
-            ->add('Statut')
-        ;
+            ->add('Statut');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

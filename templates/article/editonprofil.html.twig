@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Article{% endblock %}
+{% block title %}Edit Article
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Article</h1>
+	<h1>Edit Article</h1>
 
-    {{ include('article/_form_profil.html.twig', {'button_label': 'Update'}) }}
+	{{ include('article/_form_profil.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_private_profil') }}">back to profil</a>
+	<a href="{{ path('app_private_profil') }}">back to profil</a>
 
-    {{ include('article/_delete_form.html.twig') }}
+	{{ include('article/_delete_form.html.twig') }}
 {% endblock %}
+

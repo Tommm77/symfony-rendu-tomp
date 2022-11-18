@@ -26,7 +26,7 @@ class Article1Type extends AbstractType
                     'Publié' => 'Publié',
                 ],
             ])
-            ->add('User', EntityType::class, [ 'class' => User::class, 'choice_label' => 'FirstName', ]);
+            ->add('User', EntityType::class, ['class' => User::class, 'choice_label' => 'FirstName',]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
