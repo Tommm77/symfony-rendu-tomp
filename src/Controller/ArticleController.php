@@ -73,7 +73,7 @@ class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $articleRepository->save($article, true);
 
-            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('article/edit.html.twig', [
@@ -81,6 +81,25 @@ class ArticleController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/{id}/editonprofil', name: 'app_article_edit_profil', methods: ['GET', 'POST'])]
+    public function editprofilarticles(Request $request, Article $article, ArticleRepository $articleRepository): Response
+    {
+        $form = $this->createForm(Article1Type::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $articleRepository->save($article, true);
+
+            return $this->redirectToRoute('app_private_profil', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('article/edit.html.twig', [
+            'article' => $article,
+            'form' => $form,
+        ]);
+    }
+
 
     #[Route('/{id}', name: 'app_article_delete', methods: ['POST'])]
     public function delete(Request $request, Article $article, ArticleRepository $articleRepository): Response

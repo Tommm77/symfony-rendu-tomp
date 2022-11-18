@@ -39,4 +39,7 @@
     </table>
 
     <a href="{{ path('app_private_profil') }}">back to profil</a>
+        <a href="{{ path('app_article_edit_profil', {'id': article.id}) }}">edit</a>
+
+    {{ include('article/_delete_form_profil.html.twig') }}
 {% endblock %}
