@@ -109,7 +109,7 @@ class Article
     public function setStatut(string $Statut): self
     {
         $this->Statut = $Statut;
-
+        $Statut = "Brouillon";
         return $this;
     }
 

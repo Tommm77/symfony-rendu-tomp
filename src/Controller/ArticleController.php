@@ -32,7 +32,7 @@ class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $articleRepository->save($article, true);
 
-            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('article/new.html.twig', [
@@ -45,7 +45,7 @@ class ArticleController extends AbstractController
     public function show(Article $article): Response
     {
         $currentUser = $this->getUser();
-        if ($currentUser->getRoles() == ["ROLE_ADMIN, ROLE_USER"]) {
+        if ($currentUser->getRoles() == ["ROLE_ADMIN", "ROLE_USER"]) {
         return $this->render('article/show.html.twig', [
             'article' => $article,
         ]);
@@ -58,7 +58,7 @@ class ArticleController extends AbstractController
     public function showpublic(Article $article, User $user): Response
     {
         $currentUser = $this->getUser();
-        if ($currentUser->getRoles() == ["ROLE_ADMIN, ROLE_USER"] || $currentUser->getRoles() == ["ROLE_USER"]) {
+        if ($currentUser->getRoles() == ["ROLE_ADMIN", "ROLE_USER"] || $currentUser->getRoles() == ["ROLE_USER"]) {
         return $this->render('article/showpublic.html.twig', [
             'article' => $article,
         ]);
@@ -84,7 +84,7 @@ if ($currentUser->getId() == $article->getUser()->getId()) {
     public function edit(Request $request, Article $article, ArticleRepository $articleRepository): Response
     {
         $currentUser = $this->getUser();
-        if ($currentUser->getRoles() == ["ROLE_ADMIN, ROLE_USER"]) {
+        if ($currentUser->getRoles() == ["ROLE_ADMIN", "ROLE_USER"]) {
         $form = $this->createForm(Article1Type::class, $article);
         $form->handleRequest($request);
 
@@ -117,7 +117,7 @@ if ($currentUser->getId() == $article->getUser()->getId()) {
             return $this->redirectToRoute('app_private_profil', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('article/edit.html.twig', [
+        return $this->renderForm('article/editonprofil.html.twig', [
             'article' => $article,
             'form' => $form,
         ]);
@@ -131,7 +131,7 @@ if ($currentUser->getId() == $article->getUser()->getId()) {
     public function delete(Request $request, Article $article, ArticleRepository $articleRepository): Response
     {
         $currentUser = $this->getUser();
-        if ($currentUser->getRoles() == ["ROLE_ADMIN, ROLE_USER"]) {
+        if ($currentUser->getRoles() == ["ROLE_ADMIN", "ROLE_USER"]) {
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
             $articleRepository->remove($article, true);
         }

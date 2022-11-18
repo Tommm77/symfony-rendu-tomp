@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,7 +20,12 @@ class Article1Type extends AbstractType
             ->add('Content')
             ->add('Releasedate')
             ->add('Author')
-            ->add('Statut')
+            ->add('Statut', ChoiceType::class, [
+                'choices' => [
+                    'Brouillon' => 'Brouillon',
+                    'Publié' => 'Publié',
+                ],
+            ])
             ->add('User', EntityType::class, [ 'class' => User::class, 'choice_label' => 'FirstName', ]);
     }
 

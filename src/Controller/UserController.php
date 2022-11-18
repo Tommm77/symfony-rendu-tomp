@@ -46,7 +46,7 @@ class UserController extends AbstractController
     public function show(User $user): Response
     {
         $currentUser = $this->getUser();
-        if ($currentUser->getRoles() == ["ROLE_ADMIN, ROLE_USER"]) {
+        if ($currentUser->getRoles() == ["ROLE_ADMIN", "ROLE_USER"]) {
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
@@ -59,7 +59,7 @@ class UserController extends AbstractController
     public function edit(Request $request, User $user, UserRepository $userRepository): Response
     {
         $currentUser = $this->getUser();
-        if ($currentUser->getRoles() == ["ROLE_ADMIN, ROLE_USER"]) {
+        if ($currentUser->getRoles() == ["ROLE_ADMIN", "ROLE_USER"]) {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -106,7 +106,7 @@ if ($currentUser->getId() == $user->getId()) {
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
         $currentUser = $this->getUser();
-if ($currentUser->getRoles() == ["ROLE_ADMIN, ROLE_USER"]) {
+if ($currentUser->getRoles() == ["ROLE_ADMIN", "ROLE_USER"]) {
     if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
         $userRepository->remove($user, true);
     }
