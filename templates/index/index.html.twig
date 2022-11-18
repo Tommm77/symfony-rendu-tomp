@@ -3,8 +3,7 @@
 
 {% block body%}
 <div class="row">
- {% for article in articles|sort((b, a) => a.Releasedate <=> b.Releasedate) %}
- {% if article.id < 4 %}
+ {% for article in articles|sort((b, a) => a.Releasedate <=> b.Releasedate)|slice(0, 3) %}
  {% if article.Statut == "Publié" %}
     <div class="col-sm-6">
         <div class="card">
@@ -16,10 +15,12 @@
                 <li class="list-group-item">{{ article.Description }}</li>
                 <li class="list-group-item">{{ article.Releasedate ? article.Releasedate|date('Y-m-d H:i:s') : '' }}</li>
                 <li class="list-group-item">{{ article.Statut }}</li>
+                {% if app.user %}
                 {% if app.user.id == article.User.id %}
             <li class="list-group-item"><a class="btn btn-lg btn-primary" href="{{ path('app_private_profil', {'id': article.User.id})}}">{{ article.Author }}</a></li>
             {% else %}
             <li class="list-group-item"><a class="btn btn-lg btn-primary" href="{{ path('app_public_profil', {'id': article.User.id})}}">{{ article.Author }}</a></li>
+            {% endif %}
             {% endif %}
                 <li class="list-group-item">    <a class="btn btn-lg btn-primary" href="{{ path('app_article_showpublic', {'id': article.id}) }}">
         Show
@@ -27,7 +28,6 @@
             </ul>
         </div>
     </div>
-    {% endif %}
     {% endif %}
 
         {% endfor %}

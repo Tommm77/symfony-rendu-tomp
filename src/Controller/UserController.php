@@ -68,6 +68,24 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/editprofil', name: 'app_user_editprofil', methods: ['GET', 'POST'])]
+    public function editprofil(Request $request, User $user, UserRepository $userRepository): Response
+    {
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->save($user, true);
+
+            return $this->redirectToRoute('app_private_profil', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/editprofil.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
+
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
