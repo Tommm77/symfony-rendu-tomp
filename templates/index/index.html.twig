@@ -3,7 +3,7 @@
 
 {% block body%}
 <div class="row">
- {% for article in articles|sort((b, a) => a.Releasedate <=> b.Releasedate)|slice(0, 3) %}
+ {% for article in articles|sort((b, a) => a.Releasedate <=> b.Releasedate)|slice (1, 3)  %}
  {% if article.Statut == "Publié" %}
     <div class="col-sm-6">
         <div class="card">
@@ -29,7 +29,6 @@
         </div>
     </div>
     {% endif %}
-
         {% endfor %}
         </div>
 {% endblock %}
