@@ -13,10 +13,11 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('roles')
+            //->add('roles')
             ->add('password')
             ->add('FirstName')
             ->add('LastName')
+            ->add('articles', null, ['choice_label' => 'Title']);
         ;
     }
 

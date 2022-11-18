@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use App\Form\ArticleType;
+use App\Form\Article1Type;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class ArticleController extends AbstractController
     public function new(Request $request, ArticleRepository $articleRepository): Response
     {
         $article = new Article();
-        $form = $this->createForm(ArticleType::class, $article);
+        $form = $this->createForm(Article1Type::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -48,10 +48,18 @@ class ArticleController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/show', name: 'app_article_showpublic', methods: ['GET'])]
+    public function showpublic(Article $article): Response
+    {
+        return $this->render('article/showpublic.html.twig', [
+            'article' => $article,
+        ]);
+    }
+
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, ArticleRepository $articleRepository): Response
     {
-        $form = $this->createForm(ArticleType::class, $article);
+        $form = $this->createForm(Article1Type::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

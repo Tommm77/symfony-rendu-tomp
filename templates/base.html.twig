@@ -31,10 +31,10 @@
 
     {% if app.user %}
        <li class="nav-item active">
-        <a class="nav-link" href="{{ path('app_user_index')}}">Hello {{ app.user.firstname }} {{ app.user.lastname }}</a>
+        <a class="nav-link" href="{{ path('app_public_profil')}}">Hello {{ app.user.firstname }} {{ app.user.lastname }}</a>
       </li>
            <li class="nav-item active">
-        <a class="nav-link" href="{{ path('app_user_index')}}">Profil</a>
+        <a class="nav-link" href="{{ path('app_private_profil')}}">Profil</a>
       </li>
           {% if app.user.Roles == ["ROLE_ADMIN","ROLE_USER"] %}
      <li class="nav-item active">

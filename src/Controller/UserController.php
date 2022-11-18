@@ -77,4 +77,8 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    public function __toString(){
+        return $this->id; // Remplacer champ par une propriété "string" de l'entité
+    }
 }

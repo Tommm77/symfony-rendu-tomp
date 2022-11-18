@@ -9,12 +9,25 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/user/Dropbox/PC/Desktop/BACHELOR/W2/symfony-rendu-tomt-master/src/Controller/PublicProfilController.php'|file_link(0) }}">src/Controller/PublicProfilController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/user/Dropbox/PC/Desktop/BACHELOR/W2/symfony-rendu-tomt-master/templates/public_profil/index.html.twig'|file_link(0) }}">templates/public_profil/index.html.twig</a></code></li>
-    </ul>
+    <h1>{{ app.user.firstname }} {{ app.user.lastname }} Public Profil </h1>
+    <div class="row">
+ {% for article in articles|sort((b, a) => a.Releasedate <=> b.Releasedate) %}
+ {% if article.user == app.user %}
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+             <h5 class="card-title">{{ article.Title }}</h5>
+            <p class="card-text">{{ article.Content }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{ article.Description }}</li>
+                <li class="list-group-item">{{ article.Releasedate ? article.Releasedate|date('Y-m-d H:i:s') : '' }}</li>
+                <li class="list-group-item">{{ article.Author }}</li>
+                <li class="list-group-item">{{ article.Statut }}</li>
+            </ul>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
