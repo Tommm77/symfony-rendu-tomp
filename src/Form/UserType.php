@@ -17,7 +17,6 @@ class UserType extends AbstractType
             ->add('password')
             ->add('FirstName')
             ->add('LastName')
-            ->add('articles', null, ['choice_label' => 'Title']);
         ;
     }
 

@@ -30,11 +30,11 @@
     <ul class="navbar-nav ml-auto">
 
     {% if app.user %}
-       <li class="nav-item active">
-        <a class="nav-link" href="{{ path('app_public_profil')}}">Hello {{ app.user.firstname }} {{ app.user.lastname }}</a>
-      </li>
            <li class="nav-item active">
-        <a class="nav-link" href="{{ path('app_private_profil')}}">Profil</a>
+       <li class="nav-item active">
+        <a class="nav-link" href="{{ path('app_private_profil', {'id': app.user.id})}}">Hello {{ app.user.firstname }} {{ app.user.lastname }}</a>
+      </li>
+        <a class="nav-link" href="{{ path('app_public_profil', {'id': app.user.id})}}">Profil Public</a>
       </li>
           {% if app.user.Roles == ["ROLE_ADMIN","ROLE_USER"] %}
      <li class="nav-item active">

@@ -9,10 +9,14 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>{{ app.user.firstname }} {{ app.user.lastname }} Public Profil </h1>
+{% for user in users %}
+{% if user.id == app.request.query.get("id") %}
+     <h1>{{user.FirstName}} Public Profil </h1>
     <div class="row">
+    {% endif %}
+    {% endfor %}
  {% for article in articles|sort((b, a) => a.Releasedate <=> b.Releasedate) %}
- {% if article.user == app.user %}
+    {% if article.User.id == app.request.query.get("id") %}
     <div class="col-sm-6">
         <div class="card">
             <div class="card-body">
@@ -26,8 +30,8 @@
                 <li class="list-group-item">{{ article.Statut }}</li>
             </ul>
         </div>
+    </div>
         {% endif %}
         {% endfor %}
-    </div>
 </div>
 {% endblock %}
